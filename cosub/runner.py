@@ -13,6 +13,8 @@ import boto.mturk.question as question
 from boto.mturk.qualification import LocaleRequirement, PercentAssignmentsApprovedRequirement, Qualifications
 from boto.mturk.connection import MTurkRequestError
 
+import argparse
+
 readline.parse_and_bind('set editing-mode emacs')
 
 # HT http://stackoverflow.com/a/17303428/351392
@@ -116,6 +118,16 @@ else:
   dialogue_mode = "verbose"
 print dialogue_mode
 
+## in silent mode, accept assignment number and duration arguments
+if dialogue_mode == 'silent':
+  parser = argparse.ArgumentParser(description="generate sketches")
+  parser.add_argument('--num_assignments', type=ing, help='number of assignments', default=8)    parser.add_argument('--num_assignments', type=int, help='number of assignments', default=8)
+  parser.add_argument('--duration', type=ing, help='number of assignments', default=8)    parser.add_argument('--num_assignments', type=str, help='duration of HIT', default='4 hours')
+  args = parser.parse_args()
+else:
+  args['num_assignments'] = defaultNSs
+  args['duration'] = defaultDuration
+
 HOST = {
   'sandbox': 'mechanicalturk.sandbox.amazonaws.com',
   'production': 'mechanicalturk.amazonaws.com'
@@ -132,7 +144,7 @@ def usage():
     "",
     "Flags:",
     "   -p: production mode (if this isn't set, cosub will run in the sandbox)",
-    "   --silent: run silently with default #Ss (" + str(defaultNSs) + ") and default experiment duration (" + defaultDuration + ")",
+    "   --silent: run silently with default #Ss (" + str(args['num_assignments']) + ") and default experiment duration (" + args['duration'] + ")",
     "",
     "Actions:",
     "   create               (create a HIT using the parameters stored in settings.json)",
@@ -250,8 +262,8 @@ def create_hit(settings):
       except ValueError:
         prints("Couldn't understand answer. Try entering a positive integer (e.g., 20)")
   else:
-    prints("You will start with " + str(defaultNSs) + " assignments.")
-    max_assignments = defaultNSs
+    prints("You will start with " + str(args['num_assignments']) + " assignments.")
+    max_assignments = args['num_assignments']
 
   if mode == "production":
     reward = settings["reward"]
@@ -290,8 +302,8 @@ def create_hit(settings):
           "  12 hours",
           "  30 minutes")
   else:
-      prints("You will collect data for " + defaultDuration + ".")
-      lifetime_seconds = timeparse(defaultDuration)
+      prints("You will collect data for " + args['duration'] + ".")
+      lifetime_seconds = timeparse(args['duration'])
 
   ## TODO: implement bounds checking for time (30 seconds - 1 year)
 
