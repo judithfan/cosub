@@ -106,8 +106,8 @@ if "-p" in sys.argv:
 else:
   mode = "sandbox"
   in_sandbox = True
-defaultNSs = 9
-defaultDuration = "1 day"
+defaultNSs = 8
+defaultDuration = "4 hours"
 
 ## dialogue mode settings (silent vs verbose)
 if "--silent" in sys.argv:
