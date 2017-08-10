@@ -22,7 +22,7 @@ OSX:
 
 ```sh
 sudo pip install -U setuptools
-sudo pip install git+git://github.com/longouyang/cosub.git
+sudo pip install git+git://github.com/judithfan/cosub.git
 ```
 
 Note that you probably only need to run the first line if you're on Mavericks.
@@ -30,7 +30,7 @@ Note that you probably only need to run the first line if you're on Mavericks.
 Windows:
 
 ```sh
-pip install git+git://github.com/longouyang/cosub.git
+pip install git+git://github.com/judithfan/cosub.git
 ```
 
 ## Usage
