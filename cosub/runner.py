@@ -413,7 +413,7 @@ def get_results(host, mode, hit_id):
   if not os.path.exists(results_dir):
     os.makedirs(results_dir)
 
-  page_size = 50.0
+  page_size = 100.0
 
   ## based on number of files in results_dir, find the number of pages we've already downloaded
   downloaded_assignments = map(lambda _: _.replace(".json",""),
